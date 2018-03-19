@@ -6,6 +6,7 @@ import VidyardPlayer from '@/components/VidyardPlayer'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
