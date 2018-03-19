@@ -7,7 +7,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    let vidyardPlayerApi = document.createElement('script')
+    vidyardPlayerApi.type = 'text/javascript'
+    vidyardPlayerApi.setAttribute('src', '//play.vidyard.com/v0/api.js')
+    document.head.appendChild(vidyardPlayerApi)
+  }
 }
 </script>
 
