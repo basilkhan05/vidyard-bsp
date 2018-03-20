@@ -10,8 +10,7 @@ export default {
   name: 'VidyardPlayer',
   data () {
     return {
-      VidyardPlayer: {},
-      PlayerReady: false
+      VidyardPlayer: {}
     }
   },
   watch: {
@@ -24,25 +23,44 @@ export default {
       vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline`)
       this.$refs.vidyardPlayer.innerHTML = ''
       this.$refs.vidyardPlayer.appendChild(vidyardEmbedCode)
+      this.PlayerReady = false
+      this.initPlayerApi(uuid)
     },
     initPlayerApi (uuid) {
       // eslint-disable-next-line
       this.VidyardPlayer = new window.Vidyard.player(uuid)
-      if (this.VidyardPlayer) {
-        let VidyardPlayer = this.VidyardPlayer
-        VidyardPlayer.on('ready', function () {
-          VidyardPlayer.play()
-        })
-      }
-    },
-    watchVidyardPlayer () {
-      this.initPlayerApi()
+      this.VidyardPlayer.on('ready', function () {
+        console.log('ready')
+      })
+      this.VidyardPlayer.on('play', function () {
+        console.log('play')
+      })
+      this.VidyardPlayer.on('pause', function () {
+        console.log('pause')
+      })
+      this.VidyardPlayer.on('seek', function () {
+        console.log('seek')
+      })
+      this.VidyardPlayer.on('beforeSeek', function () {
+        console.log('beforeSeek')
+      })
+      this.VidyardPlayer.on('playerComplete', function () {
+        console.log('playerComplete')
+      })
+      this.VidyardPlayer.on('chapterComplete', function () {
+        console.log('chapterComplete')
+      })
+      this.VidyardPlayer.on('timeupdate', function () {
+        console.log('timeupdate')
+      })
+      this.VidyardPlayer.on('volumeChange', function () {
+        console.log('volumeChange')
+      })
     }
   },
   beforeRouteUpdate (to, from, next) {
     console.log('beforeRouteUpdate')
     this.loadVidyardEmbedCode(to.params.uuid)
-    this.initPlayerApi(to.params.uuid)
     next()
   },
   mounted () {
