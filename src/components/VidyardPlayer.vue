@@ -28,32 +28,32 @@ export default {
     },
     initPlayerApi (uuid) {
       // eslint-disable-next-line
-      this.VidyardPlayer = new window.Vidyard.player(uuid)
-      this.VidyardPlayer.on('ready', function () {
+      let VidyardPlayer = new window.Vidyard.player(uuid)
+      VidyardPlayer.on('ready', function () {
         console.log('ready')
       })
-      this.VidyardPlayer.on('play', function () {
+      VidyardPlayer.on('play', function () {
         console.log('play')
       })
-      this.VidyardPlayer.on('pause', function () {
+      VidyardPlayer.on('pause', function () {
         console.log('pause')
       })
-      this.VidyardPlayer.on('seek', function () {
+      VidyardPlayer.on('seek', function () {
         console.log('seek')
       })
-      this.VidyardPlayer.on('beforeSeek', function () {
+      VidyardPlayer.on('beforeSeek', function () {
         console.log('beforeSeek')
       })
-      this.VidyardPlayer.on('playerComplete', function () {
+      VidyardPlayer.on('playerComplete', function () {
         console.log('playerComplete')
       })
-      this.VidyardPlayer.on('chapterComplete', function () {
+      VidyardPlayer.on('chapterComplete', function () {
         console.log('chapterComplete')
       })
-      this.VidyardPlayer.on('timeupdate', function () {
+      VidyardPlayer.on('timeupdate', function () {
         console.log('timeupdate')
       })
-      this.VidyardPlayer.on('volumeChange', function () {
+      VidyardPlayer.on('volumeChange', function () {
         console.log('volumeChange')
       })
     }
