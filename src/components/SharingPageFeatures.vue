@@ -42,9 +42,7 @@ export default {
   name: 'SharingPageFeatures',
   methods: {
     navigateTo (page, uuid) {
-      console.log(this.$router)
-      let router = this.$router
-      router.push({ name: page, params: { uuid: uuid } })
+      this.$router.push({ name: page, params: { uuid: uuid } })
     }
   },
   data () {

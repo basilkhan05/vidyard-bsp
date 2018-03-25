@@ -23,39 +23,53 @@ export default {
       vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline`)
       this.$refs.vidyardPlayer.innerHTML = ''
       this.$refs.vidyardPlayer.appendChild(vidyardEmbedCode)
-      this.PlayerReady = false
       this.initPlayerApi(uuid)
+    },
+    playerReady () {
+      console.log('playerReady')
+    },
+    playerPlay () {
+      console.log('playerPlay')
+    },
+    playerPause () {
+      console.log('playerPause')
+    },
+    playerSeek () {
+      console.log('playerSeek')
+    },
+    playerBeforeSeek () {
+      console.log('playerBeforeSeek')
+    },
+    playerComplete () {
+      console.log('playerComplete')
+    },
+    playerChapterComplete () {
+      console.log('playerChapterComplete')
+    },
+    playerTimeupdate () {
+      console.log('playerTimeupdate')
+    },
+    playerVolumeChange () {
+      console.log('playerVolumeChange')
+    },
+    initVidyardPlayerApiEvent (event, callback) {
+      this.VidyardPlayer.on(event, callback)
+    },
+    unloadVidyardPlayerApiEvent (event, callback) {
+      this.VidyardPlayer.off(event, callback)
     },
     initPlayerApi (uuid) {
       // eslint-disable-next-line
-      let VidyardPlayer = new window.Vidyard.player(uuid)
-      VidyardPlayer.on('ready', function () {
-        console.log('ready')
-      })
-      VidyardPlayer.on('play', function () {
-        console.log('play')
-      })
-      VidyardPlayer.on('pause', function () {
-        console.log('pause')
-      })
-      VidyardPlayer.on('seek', function () {
-        console.log('seek')
-      })
-      VidyardPlayer.on('beforeSeek', function () {
-        console.log('beforeSeek')
-      })
-      VidyardPlayer.on('playerComplete', function () {
-        console.log('playerComplete')
-      })
-      VidyardPlayer.on('chapterComplete', function () {
-        console.log('chapterComplete')
-      })
-      VidyardPlayer.on('timeupdate', function () {
-        console.log('timeupdate')
-      })
-      VidyardPlayer.on('volumeChange', function () {
-        console.log('volumeChange')
-      })
+      this.VidyardPlayer = new window.Vidyard.player(uuid)
+      this.initVidyardPlayerApiEvent('ready', this.playerReady)
+      this.initVidyardPlayerApiEvent('play', this.playerPlay)
+      this.initVidyardPlayerApiEvent('pause', this.playerPause)
+      this.initVidyardPlayerApiEvent('seek', this.playerSeek)
+      this.initVidyardPlayerApiEvent('beforeSeek', this.playerBeforeSeek)
+      this.initVidyardPlayerApiEvent('playerComplete', this.playerComplete)
+      this.initVidyardPlayerApiEvent('chapterComplete', this.playerChapterComplete)
+      this.initVidyardPlayerApiEvent('timeupdate', this.playerTimeupdate)
+      this.initVidyardPlayerApiEvent('volumeChange', this.playervolumeChange)
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -67,6 +81,18 @@ export default {
     console.log('mounted')
     let uuid = this.$route.params.uuid
     this.loadVidyardEmbedCode(uuid)
+  },
+  beforeDestroy () {
+    console.log('destroyPlayer')
+    this.unloadVidyardPlayerApiEvent('ready', this.playerReady)
+    this.unloadVidyardPlayerApiEvent('play', this.playerPlay)
+    this.unloadVidyardPlayerApiEvent('pause', this.playerPause)
+    this.unloadVidyardPlayerApiEvent('seek', this.playerSeek)
+    this.unloadVidyardPlayerApiEvent('beforeSeek', this.playerBeforeSeek)
+    this.unloadVidyardPlayerApiEvent('playerComplete', this.playerComplete)
+    this.unloadVidyardPlayerApiEvent('chapterComplete', this.playerChapterComplete)
+    this.unloadVidyardPlayerApiEvent('timeupdate', this.playerTimeupdate)
+    this.unloadVidyardPlayerApiEvent('volumeChange', this.playervolumeChange)
   }
 }
 </script>
