@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logo-holder"><a href="./"><img src="http://basilkhan.ca/images/logo.png" class="respimg" alt=""></a></div>
+    <div class="logo-holder"><a href="/"><img src="http://basilkhan.ca/images/logo.png" class="respimg" alt=""></a></div>
   </header>
 </template>
 

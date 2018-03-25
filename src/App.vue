@@ -11,6 +11,8 @@
 <script>
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
   name: 'App',
@@ -33,6 +35,6 @@ body {
   color: #2c3e50;
 }
 .page-container {
-  margin: 135px 0;
+  margin: 135px auto;
 }
 </style>
