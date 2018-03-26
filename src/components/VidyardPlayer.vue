@@ -15,10 +15,11 @@ export default {
   },
   methods: {
     loadVidyardEmbedCode (uuid) {
+      let queryParams = this.jsonToQueryString(this.$route.query)
       let vidyardEmbedCode = document.createElement('script')
       vidyardEmbedCode.type = 'text/javascript'
       vidyardEmbedCode.id = `vidyard_embed_code_${uuid}`
-      vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline&height=480`)
+      vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline&height=480&${queryParams}`)
       this.$refs.vidyardPlayer.innerHTML = ''
       this.$refs.vidyardPlayer.appendChild(vidyardEmbedCode)
       this.initPlayerApi(uuid)
@@ -68,6 +69,12 @@ export default {
       this.initVidyardPlayerApiEvent('chapterComplete', this.playerChapterComplete)
       this.initVidyardPlayerApiEvent('timeupdate', this.playerTimeupdate)
       this.initVidyardPlayerApiEvent('volumeChange', this.playervolumeChange)
+    },
+    jsonToQueryString (json) {
+      return Object.keys(json).map(function (key) {
+        return encodeURIComponent(key) + '=' +
+        encodeURIComponent(json[key])
+      }).join('&')
     }
   },
   beforeRouteUpdate (to, from, next) {
