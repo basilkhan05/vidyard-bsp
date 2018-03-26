@@ -6,6 +6,9 @@
         <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
       </div>
     </div>
+    <div class="player-description container">
+      <p>{{playerDescription}}</p>
+    </div>
   </div>
 </template>
 
@@ -13,7 +16,7 @@
 import VidyardPlayer from '@/components/VidyardPlayer'
 
 export default {
-  name: 'SimpleSharingPage',
+  name: 'DetailedSharingPage',
   components: { VidyardPlayer },
   data () {
     return {
@@ -56,5 +59,9 @@ export default {
   position: absolute!important;
   width: 100%!important;
   height: 100%!important;
+}
+.player-description {
+  max-width: 853px;
+  padding: 35px 0;
 }
 </style>
