@@ -1,7 +1,13 @@
 <template>
-  <div id="stage">
-    <div class="aspect-ratio">
-      <VidyardPlayer />
+  <div>
+    <h1>{{playerName}}</h1>
+    <div id="stage">
+      <div class="aspect-ratio">
+        <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
+      </div>
+    </div>
+    <div class="player-description container">
+      <p>{{playerDescription}}</p>
     </div>
   </div>
 </template>
@@ -11,7 +17,28 @@ import VidyardPlayer from '@/components/VidyardPlayer'
 
 export default {
   name: 'SimpleSharingPage',
-  components: { VidyardPlayer }
+  components: { VidyardPlayer },
+  data () {
+    return {
+      playerName: '',
+      playerDescription: '',
+      playerIsReady: false,
+      playerStatus: {}
+    }
+  },
+  methods: {
+    getPlayerData (params) {
+      this.playerName = params.playerMetadata.name
+      this.playerDescription = params.playerMetadata.description
+      this.playerIsReady = params.playerReady
+      this.playerStatus = params.playerStatus
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
+    console.log('beforeRouteUpdate')
+    this.$refs.VidyardPlayerContainer.loadVidyardEmbedCode(to.params.uuid)
+    next()
+  }
 }
 </script>
 
@@ -20,7 +47,6 @@ export default {
 #stage {
   padding: 0;
   margin: 0 auto;
-  max-width: 1200px;
   max-width: 853px
 }
 #stage .aspect-ratio {
@@ -33,5 +59,9 @@ export default {
   position: absolute!important;
   width: 100%!important;
   height: 100%!important;
+}
+.player-description {
+  max-width: 853px;
+  padding: 35px 0;
 }
 </style>

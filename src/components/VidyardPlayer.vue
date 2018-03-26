@@ -1,17 +1,15 @@
 <template>
-    <div id="vidyard-player" ref="vidyardPlayer"></div>
+  <div id="vidyard-player" ref="vidyardPlayer"></div>
 </template>
 
 <script>
-
 export default {
   name: 'VidyardPlayer',
+  props: [ 'playerData' ],
   data () {
     return {
       VidyardPlayer: {}
     }
-  },
-  watch: {
   },
   methods: {
     loadVidyardEmbedCode (uuid) {
@@ -26,6 +24,11 @@ export default {
     },
     playerReady () {
       console.log('playerReady')
+      this.$emit('playerData',
+        { playerMetadata: this.VidyardPlayer.metadata,
+          playerReady: this.VidyardPlayer._ready,
+          playerStatus: this.VidyardPlayer.status
+        })
     },
     playerPlay () {
       console.log('playerPlay')
