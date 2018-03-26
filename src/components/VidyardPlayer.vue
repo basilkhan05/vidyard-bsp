@@ -1,7 +1,5 @@
 <template>
-  <div id="vidyard-player" ref="vidyardPlayer">
-    <i class="fa fa-cog"></i>
-  </div>
+    <div id="vidyard-player" ref="vidyardPlayer"></div>
 </template>
 
 <script>
@@ -20,7 +18,7 @@ export default {
       let vidyardEmbedCode = document.createElement('script')
       vidyardEmbedCode.type = 'text/javascript'
       vidyardEmbedCode.id = `vidyard_embed_code_${uuid}`
-      vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline`)
+      vidyardEmbedCode.setAttribute('src', `//play.vidyard.com/${uuid}.js?v=3.1.1&type=inline&height=480`)
       this.$refs.vidyardPlayer.innerHTML = ''
       this.$refs.vidyardPlayer.appendChild(vidyardEmbedCode)
       this.initPlayerApi(uuid)
@@ -99,5 +97,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

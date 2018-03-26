@@ -25,7 +25,7 @@
                           :readonly="true">
             </b-form-input>
             <b-input-group-append>
-              <b-btn variant="info" v-on:click="navigateTo('VidyardPlayer', playerUUID)">
+              <b-btn variant="info" v-on:click="navigateTo('SimpleSharingPage', playerUUID)">
                 <i class="fa fa-link"></i>
               </b-btn>
             </b-input-group-append>

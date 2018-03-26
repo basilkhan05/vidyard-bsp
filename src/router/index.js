@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import IndexPage from '@/components/IndexPage'
-import VidyardPlayer from '@/components/VidyardPlayer'
+import SimpleSharingPage from '@/components/SimpleSharingPage'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -15,8 +15,8 @@ export default new Router({
     },
     {
       path: '/watch/:uuid',
-      name: 'VidyardPlayer',
-      component: VidyardPlayer
+      name: 'SimpleSharingPage',
+      component: SimpleSharingPage
     }
   ]
 })
