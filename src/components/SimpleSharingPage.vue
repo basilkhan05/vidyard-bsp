@@ -29,6 +29,7 @@ export default {
       this.playerDescription = params.playerMetadata.description
       this.playerIsReady = params.playerReady
       this.playerStatus = params.playerStatus
+      document.title = this.playerName
     }
   },
   beforeRouteUpdate (to, from, next) {

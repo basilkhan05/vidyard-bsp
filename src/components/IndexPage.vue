@@ -16,6 +16,9 @@ export default {
     return {
       pageTitle: 'Unofficial Vidyard Player Sharing Page 2.0'
     }
+  },
+  mounted () {
+    document.title = this.pageTitle
   }
 }
 </script>
