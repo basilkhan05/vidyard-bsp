@@ -7,7 +7,10 @@
       </div>
     </div>
     <div class="player-description container">
+      <p>Now Playing: <strong>{{nowPlayingVideoName}} </strong></p>
+      <p>{{playerStatus}}</p>
       <p>{{playerDescription}}</p>
+
     </div>
   </div>
 </template>
@@ -20,14 +23,18 @@ export default {
   components: { VidyardPlayer },
   data () {
     return {
+      playerObject: {},
       playerName: '',
       playerDescription: '',
+      playerMetadata: {},
       playerIsReady: false,
-      playerStatus: {}
+      playerStatus: {},
+      nowPlayingVideoName: ''
     }
   },
   methods: {
     getPlayerData (params) {
+      this.playerObject = params.VidyardPlayer
       this.playerName = params.playerMetadata.name
       this.playerDescription = params.playerMetadata.description
       this.playerIsReady = params.playerReady

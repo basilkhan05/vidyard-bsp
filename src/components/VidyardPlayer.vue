@@ -8,7 +8,8 @@ export default {
   props: [ 'playerData' ],
   data () {
     return {
-      VidyardPlayer: {}
+      VidyardPlayer: {},
+      playerStatusReady: false
     }
   },
   methods: {
@@ -24,6 +25,7 @@ export default {
     },
     playerReady () {
       console.log('playerReady')
+      this.playerStatusReady = true
       this.$emit('playerData',
         { playerMetadata: this.VidyardPlayer.metadata,
           playerReady: this.VidyardPlayer._ready,
@@ -50,9 +52,13 @@ export default {
     },
     playerTimeupdate () {
       console.log('playerTimeupdate')
-    },
-    playerVolumeChange () {
-      console.log('playerVolumeChange')
+      if (this.playerStatusReady) {
+        this.$emit('playerData',
+          { playerMetadata: this.VidyardPlayer.metadata,
+            playerReady: this.VidyardPlayer._ready,
+            playerStatus: this.VidyardPlayer.status
+          })
+      }
     },
     initVidyardPlayerApiEvent (event, callback) {
       this.VidyardPlayer.on(event, callback)
@@ -71,7 +77,6 @@ export default {
       this.initVidyardPlayerApiEvent('playerComplete', this.playerComplete)
       this.initVidyardPlayerApiEvent('chapterComplete', this.playerChapterComplete)
       this.initVidyardPlayerApiEvent('timeupdate', this.playerTimeupdate)
-      this.initVidyardPlayerApiEvent('volumeChange', this.playervolumeChange)
     },
     jsonToQueryString (json) {
       return Object.keys(json).map(function (key) {
@@ -92,6 +97,7 @@ export default {
   },
   beforeDestroy () {
     console.log('destroyPlayer')
+    this.playerStatusReady = false
     this.unloadVidyardPlayerApiEvent('ready', this.playerReady)
     this.unloadVidyardPlayerApiEvent('play', this.playerPlay)
     this.unloadVidyardPlayerApiEvent('pause', this.playerPause)
