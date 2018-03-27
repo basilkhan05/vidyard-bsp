@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import IndexPage from '@/components/IndexPage'
-import SimpleSharingPage from '@/components/SimpleSharingPage'
-import DetailedSharingPage from '@/components/DetailedSharingPage'
+import SimpleSharingPage from '@/components/sharingPageTypes/SimpleSharingPage'
+import DetailedSharingPage from '@/components/sharingPageTypes/DetailedSharingPage'
 
 Vue.use(Router)
 
