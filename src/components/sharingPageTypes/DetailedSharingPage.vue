@@ -7,8 +7,23 @@
       </div>
     </div>
     <div class="player-description container">
-      <p>Now Playing: <strong>{{nowPlayingVideoName}} </strong></p>
-      <p>{{playerStatus}}</p>
+      <b-card bg-variant="dark"
+              text-variant="white"
+              :title="`Now Playing ${(currentVideoIndex+1)} of ${(chapterAttributes.length)}`"
+        >
+        <h2>{{nowPlayingVideoName}}
+          <b-badge>{{currentVideoTime}} / {{totalVideoDuration}}</b-badge>
+        </h2>
+        <p class="card-text">
+          {{nowPlayerVideoDesc}}
+        </p>
+        <div v-if="chapterAttributes.length > 1">
+          <b-button variant="primary" @click="playNextVideo(currentVideoIndex+1)">
+            Play Next Video <i class="fa fa-forward"></i>
+          </b-button>
+        </div>
+      </b-card>
+      <hr/>
       <p>{{playerDescription}}</p>
 
     </div>
@@ -17,6 +32,7 @@
 
 <script>
 import VidyardPlayer from '@/components/VidyardPlayer'
+import leftPad from 'left-pad'
 
 export default {
   name: 'DetailedSharingPage',
@@ -29,22 +45,50 @@ export default {
       playerMetadata: {},
       playerIsReady: false,
       playerStatus: {},
-      nowPlayingVideoName: ''
+      nowPlayingVideoName: '',
+      nowPlayerVideoDesc: '',
+      currentVideoTime: '',
+      totalVideoDuration: '',
+      currentVideoIndex: 0,
+      chapterAttributes: []
     }
   },
   methods: {
     getPlayerData (params) {
       this.playerObject = params.VidyardPlayer
+      this.playerMetadata = params.playerMetadata
       this.playerName = params.playerMetadata.name
       this.playerDescription = params.playerMetadata.description
       this.playerIsReady = params.playerReady
       this.playerStatus = params.playerStatus
 
+      this.getVideoMetadata()
+
       document.title = this.playerName
+    },
+    getVideoMetadata () {
+      let { chapterIndex, currentTime } = this.playerStatus
+      let lengthInSeconds = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.length_in_seconds
+
+      this.chapterAttributes = this.playerMetadata.chapters_attributes
+      this.nowPlayingVideoName = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.name
+      this.nowPlayerVideoDesc = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.description
+
+      this.totalVideoDuration = this.convertVideoDuration(lengthInSeconds)
+      this.currentVideoTime = this.convertVideoDuration(currentTime)
+      this.currentVideoIndex = chapterIndex
+    },
+    playNextVideo (index) {
+      index = (index > this.chapterAttributes.length - 1) ? 0 : index
+      this.playerObject.playChapter(index)
+    },
+    convertVideoDuration (totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60)
+      const seconds = Math.floor(totalSeconds % 60)
+      return minutes + ':' + leftPad(seconds, 2, 0)
     }
   },
   beforeRouteUpdate (to, from, next) {
-    console.log('beforeRouteUpdate')
     this.$refs.VidyardPlayerContainer.loadVidyardEmbedCode(to.params.uuid)
     next()
   }

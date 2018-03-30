@@ -24,37 +24,31 @@ export default {
       this.initPlayerApi(uuid)
     },
     playerReady () {
-      console.log('playerReady')
       this.playerStatusReady = true
       this.$emit('playerData',
-        { playerMetadata: this.VidyardPlayer.metadata,
+        { VidyardPlayer: this.VidyardPlayer,
+          playerMetadata: this.VidyardPlayer.metadata,
           playerReady: this.VidyardPlayer._ready,
           playerStatus: this.VidyardPlayer.status
         })
     },
     playerPlay () {
-      console.log('playerPlay')
     },
     playerPause () {
-      console.log('playerPause')
     },
     playerSeek () {
-      console.log('playerSeek')
     },
     playerBeforeSeek () {
-      console.log('playerBeforeSeek')
     },
     playerComplete () {
-      console.log('playerComplete')
     },
     playerChapterComplete () {
-      console.log('playerChapterComplete')
     },
     playerTimeupdate () {
-      console.log('playerTimeupdate')
       if (this.playerStatusReady) {
         this.$emit('playerData',
-          { playerMetadata: this.VidyardPlayer.metadata,
+          { VidyardPlayer: this.VidyardPlayer,
+            playerMetadata: this.VidyardPlayer.metadata,
             playerReady: this.VidyardPlayer._ready,
             playerStatus: this.VidyardPlayer.status
           })
@@ -86,17 +80,14 @@ export default {
     }
   },
   beforeRouteUpdate (to, from, next) {
-    console.log('beforeRouteUpdate')
     this.loadVidyardEmbedCode(to.params.uuid)
     next()
   },
   mounted () {
-    console.log('mounted')
     let uuid = this.$route.params.uuid
     this.loadVidyardEmbedCode(uuid)
   },
   beforeDestroy () {
-    console.log('destroyPlayer')
     this.playerStatusReady = false
     this.unloadVidyardPlayerApiEvent('ready', this.playerReady)
     this.unloadVidyardPlayerApiEvent('play', this.playerPlay)
