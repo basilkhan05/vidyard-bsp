@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="logo-holder">
-      <router-link :to="{name: 'IndexPage'}"><img src="http://basilkhan.ca/images/logo.png" class="respimg" alt=""></router-link>
+      <router-link :to="{name: 'IndexPage'}">
+        <img src="./assets/logo.png" class="respimg" alt="">
+      </router-link>
     </div>
   </header>
 </template>

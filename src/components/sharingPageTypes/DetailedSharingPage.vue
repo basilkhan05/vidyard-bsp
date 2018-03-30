@@ -15,7 +15,7 @@
           <b-badge>{{currentVideoTime}} / {{totalVideoDuration}}</b-badge>
         </h2>
         <p class="card-text">
-          {{nowPlayerVideoDesc}}
+          <span v-html="nowPlayerVideoDesc"></span>
         </p>
         <div v-if="chapterAttributes.length > 1">
           <b-button variant="primary" @click="playNextVideo(currentVideoIndex+1)">
