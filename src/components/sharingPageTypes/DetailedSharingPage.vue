@@ -6,7 +6,7 @@
         <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
       </div>
     </div>
-    <div class="player-description container">
+    <div class="player-description container" v-if="playerIsReady">
       <b-card bg-variant="dark"
               text-variant="white"
               :title="`Now Playing ${(currentVideoIndex+1)} of ${(chapterAttributes.length)}`"
@@ -25,7 +25,6 @@
       </b-card>
       <hr/>
       <p>{{playerDescription}}</p>
-
     </div>
   </div>
 </template>
