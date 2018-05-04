@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo-holder">
-      <router-link :to="{name: 'IndexPage'}">
+      <router-link :to="{name: 'IndexPage', query: { player_referrer: this.$route.params.uuid} }">
         <img src="./assets/logo.png" class="respimg" alt="">
       </router-link>
     </div>
