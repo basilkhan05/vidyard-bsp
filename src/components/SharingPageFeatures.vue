@@ -50,6 +50,22 @@
       </b-col>
       <b-col offset-lg="3" lg="6">
         <b-card cols="12" >
+          <h3>One Column Playlist Page</h3>
+          <b-input-group>
+            <b-form-input type="text"
+                          :value="'/watch/'+playerUUID+'/playlist'"
+                          :readonly="true">
+            </b-form-input>
+            <b-input-group-append>
+              <b-btn variant="info" v-on:click="navigateTo('OneColumnPlaylist', playerUUID)">
+                <i class="fa fa-link"></i>
+              </b-btn>
+            </b-input-group-append>
+          </b-input-group>
+        </b-card>
+      </b-col>
+      <b-col offset-lg="3" lg="6">
+        <b-card cols="12" >
           <h3>Two Column Playlist Page</h3>
           <b-input-group>
             <b-form-input type="text"
@@ -85,7 +101,7 @@ export default {
 }
 </script>
 
-<style scopped>
+<style scoped>
 input {
   text-align: center;
 }

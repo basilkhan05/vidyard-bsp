@@ -95,7 +95,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 #stage {
   padding: 0;
   margin: 0 auto;
