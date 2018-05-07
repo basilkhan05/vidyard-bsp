@@ -80,6 +80,7 @@ export default {
     playNextVideo (index) {
       index = (index > this.chapterAttributes.length - 1) ? 0 : index
       this.playerObject.playChapter(index)
+      this.playerObject.play()
     },
     convertVideoDuration (totalSeconds) {
       const minutes = Math.floor(totalSeconds / 60)
