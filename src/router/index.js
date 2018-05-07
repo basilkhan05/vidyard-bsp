@@ -5,6 +5,7 @@ import SimpleSharingPage from '@/components/sharingPageTypes/SimpleSharingPage'
 import DetailedSharingPage from '@/components/sharingPageTypes/DetailedSharingPage'
 import OneColumnPlaylist from '@/components/sharingPageTypes/OneColumnPlaylist'
 import TwoColumnPlaylist from '@/components/sharingPageTypes/TwoColumnPlaylist'
+import TimelinePlaylist from '@/components/sharingPageTypes/TimelinePlaylist'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/watch/:uuid/playlist/two-column',
       name: 'TwoColumnPlaylist',
       component: TwoColumnPlaylist
+    },
+    {
+      path: '/watch/:uuid/timeline',
+      name: 'TimelinePlaylist',
+      component: TimelinePlaylist
     }
   ]
 })

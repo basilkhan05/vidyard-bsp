@@ -80,6 +80,22 @@
           </b-input-group>
         </b-card>
       </b-col>
+      <b-col offset-lg="3" lg="6">
+        <b-card cols="12" >
+          <h3>Timeline Playlist Page</h3>
+          <b-input-group>
+            <b-form-input type="text"
+                          :value="'/watch/'+playerUUID+'/timeline'"
+                          :readonly="true">
+            </b-form-input>
+            <b-input-group-append>
+              <b-btn variant="info" v-on:click="navigateTo('TimelinePlaylist', playerUUID)">
+                <i class="fa fa-link"></i>
+              </b-btn>
+            </b-input-group-append>
+          </b-input-group>
+        </b-card>
+      </b-col>
     </b-row>
   </b-container>
 </template>
