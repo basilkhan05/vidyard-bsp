@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row>
-        <b-col lg="6">
+        <b-col lg="7">
           <h1 class="text-left">{{playerName}}</h1>
           <div id="stage">
             <div class="aspect-ratio">
@@ -30,15 +30,15 @@
             <p>{{playerDescription}}</p>
           </div>
         </b-col>
-        <b-col lg="6">
-          <div class="timeline-wrap">
+        <b-col lg="5">
+          <div class="timeline-wrap" v-if="playerIsReady">
             <ul class="timeline">
-              <div id="vy-playlist" v-if="playerIsReady">
+              <div id="vy-playlist">
                 <div v-for="(video, index) in chapterAttributes" :key="video.id">
                   <li class="era">
                     <b-card :img-src="video.video_attributes.thumbnail_urls.play_button_small"
                         img-alt="Card image"
-                        img-top
+                        img-bottom
                         @click="playChapter(index)"
                         v-bind:class="{ active: currentVideoIndex === index }">
                       <p class="card-text">
@@ -50,26 +50,20 @@
                       </p>
                     </b-card>
                   </li>
+                  <div v-if="videoChaptering[index]">
+                    <li class="entry entry--right" v-for="(chapterMark) in videoChaptering[index]" :key="chapterMark.id" >
+                      <div class="entry__content wow animated fadeIn"
+                           data-wow-duration="1s"
+                           data-wow-delay="0.5s"
+                           @click="playChapterMark(index, chapterMark.seekTime)"
+                          >
+                          <h2>{{ chapterMark.description }}</h2>
+                          <p>({{ convertVideoDuration(chapterMark.seekTime) }})</p>
+                      </div>
+                    </li>
+                  </div>
                 </div>
               </div>
-              <li class="entry entry--left">
-                <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                    <h2>Bacon Ipsum</h2>
-                    <p>Bacon ipsum dolor amet ball tip jerky sirloin pancetta capicola prosciutto meatball pig leberkas cow pork chop shank meatloaf.</p>
-                </div>
-              </li>
-              <li class="entry entry--right">
-                <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                    <h2>Bacon Ipsum</h2>
-                    <p>Ground round short ribs fatback, salami shoulder sausage chuck shankle landjaeger drumstick ribeye meatloaf doner.</p>
-                </div>
-              </li>
-              <li class="entry entry--left">
-                <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                    <h2>Bacon Ipsum</h2>
-                    <p>Swine pork belly prosciutto jowl pork chop chicken filet mignon cupim doner boudin.</p>
-                </div>
-              </li>
           </ul>
         </div>
         </b-col>
@@ -98,7 +92,8 @@ export default {
       currentVideoTime: '',
       totalVideoDuration: '',
       currentVideoIndex: 0,
-      chapterAttributes: []
+      chapterAttributes: [],
+      videoChaptering: []
     }
   },
   methods: {
@@ -119,6 +114,7 @@ export default {
       let lengthInSeconds = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.length_in_seconds
 
       this.chapterAttributes = this.playerMetadata.chapters_attributes
+      this.videoChaptering = this.getVideoChaptering(this.playerMetadata.custom_attributes)
       this.nowPlayingVideoName = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.name
       this.nowPlayerVideoDesc = this.playerMetadata.chapters_attributes[chapterIndex].video_attributes.description
 
@@ -135,10 +131,51 @@ export default {
       this.playerObject.playChapter(index)
       this.playerObject.play()
     },
+    playChapterMark (index, seekTime) {
+      this.playerObject.playChapter(index)
+      this.playerObject.play()
+      this.playerObject.seek(seekTime)
+    },
     convertVideoDuration (totalSeconds) {
       const minutes = Math.floor(totalSeconds / 60)
       const seconds = Math.floor(totalSeconds % 60)
       return minutes + ':' + leftPad(seconds, 2, 0)
+    },
+    getVideoChaptering (customAttributes) {
+      let videoChaptering = []
+      for (let i = 0; i < customAttributes.length; i++) {
+        let videoChapterMark = customAttributes[i].name.split('_')
+        let videoChapterMarkIndex = parseInt(videoChapterMark[1])
+        if (videoChapterMark[0] === 'vytimeline' && typeof videoChapterMarkIndex === 'number') {
+          let chapterMarkDescription = videoChapterMark.slice(2).join(' ')
+          let seekTime = parseInt(customAttributes[i].value)
+          if (!videoChaptering[videoChapterMarkIndex]) {
+            videoChaptering[videoChapterMarkIndex] = []
+          }
+          videoChaptering[videoChapterMarkIndex].push({
+            description: chapterMarkDescription,
+            seekTime: seekTime
+          })
+          // let chapterMarkDescription = videoChapterMark.slice(2).join(' ')
+          // let seekTime = parseInt(customAttributes[i].value)
+          // if (!videoChaptering[videoChapterMarkIndex]) {
+          //   videoChaptering[videoChapterMarkIndex] = {}
+          // }
+          // videoChaptering[videoChapterMarkIndex][chapterMarkDescription] = seekTime
+        }
+      }
+
+      for (var i = 0; i < videoChaptering.length; i++) {
+        videoChaptering[i].sort(function (a, b) {
+          let keyA = a.videoChaptering
+          let keyB = b.videoChaptering
+          if (keyA < keyB) return -1
+          if (keyA > keyB) return 1
+          return 0
+        })
+      }
+
+      return videoChaptering
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -197,7 +234,7 @@ export default {
 #vy-playlist .card small {
   padding: 4px;
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   color: white;
   background: grey;
@@ -259,7 +296,7 @@ export default {
     background-color: #EEEEEE;
     position: relative;
     border-radius: 4px;
-    cursor: default;
+    cursor: pointer;
     transition: all 0.3s ease 0s;
     box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.2);
 }
@@ -300,6 +337,7 @@ export default {
     margin-bottom: 0.5em;
     font-size: 22px;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .timeline p {
@@ -307,7 +345,7 @@ export default {
     line-height: 1.4;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 1500px) {
     .timeline:after {
         left: 33.75px;
     }
