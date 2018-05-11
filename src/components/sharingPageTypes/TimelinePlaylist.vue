@@ -57,8 +57,7 @@
                            data-wow-delay="0.5s"
                            @click="playChapterMark(index, chapterMark.seekTime)"
                           >
-                          <h2>{{ chapterMark.description }}</h2>
-                          <p>({{ convertVideoDuration(chapterMark.seekTime) }})</p>
+                          <h2>{{ chapterMark.description }} <small>({{ convertVideoDuration(chapterMark.seekTime) }})</small></h2>
                       </div>
                     </li>
                   </div>
@@ -167,8 +166,8 @@ export default {
 
       for (var i = 0; i < videoChaptering.length; i++) {
         videoChaptering[i].sort(function (a, b) {
-          let keyA = a.videoChaptering
-          let keyB = b.videoChaptering
+          let keyA = a.seekTime
+          let keyB = b.seekTime
           if (keyA < keyB) return -1
           if (keyA > keyB) return 1
           return 0
@@ -238,6 +237,10 @@ export default {
   right: 0;
   color: white;
   background: grey;
+}
+.timeline-wrap {
+  height: 750px;
+  overflow: scroll;
 }
 .timeline {
     position: relative;

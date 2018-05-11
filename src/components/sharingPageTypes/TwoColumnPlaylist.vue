@@ -173,7 +173,7 @@ export default {
 #vy-playlist .card small {
   padding: 4px;
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   color: white;
   background: grey;

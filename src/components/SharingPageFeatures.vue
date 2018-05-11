@@ -111,7 +111,7 @@ export default {
   },
   data () {
     return {
-      playerUUID: this.$route.query.player_referrer ? this.$route.query.player_referrer : 'SpwLLqZboZB7hpog1JMM1D'
+      playerUUID: this.$route.query.player_referrer ? this.$route.query.player_referrer : '2DRxX88aVKeMZnuXcbcv82'
     }
   }
 }
