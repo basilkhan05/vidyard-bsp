@@ -2,6 +2,9 @@
   <div>
     <h1>{{playerName}}</h1>
     <div id="stage">
+      <div v-if="!playerIsReady">
+        <Loader />
+      </div>
       <div class="aspect-ratio">
         <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
       </div>
@@ -11,10 +14,11 @@
 
 <script>
 import VidyardPlayer from '@/components/VidyardPlayer'
+import Loader from '@/components/layout/Loader'
 
 export default {
   name: 'SimpleSharingPage',
-  components: { VidyardPlayer },
+  components: { VidyardPlayer, Loader },
   data () {
     return {
       playerName: '',

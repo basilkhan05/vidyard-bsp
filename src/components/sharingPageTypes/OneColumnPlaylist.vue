@@ -3,6 +3,9 @@
     <b-container>
       <b-row>
         <b-col lg="12">
+          <div v-if="!playerIsReady">
+            <Loader />
+          </div>
           <h1 class="text-center">{{playerName}}</h1>
           <div id="stage">
             <div class="aspect-ratio">
@@ -27,6 +30,9 @@
                 </p>
               </b-card>
             </div>
+          </div>
+          <div v-else>
+            <Loader />
           </div>
         </b-col>
         <b-col lg="12">
@@ -58,11 +64,12 @@
 
 <script>
 import VidyardPlayer from '@/components/VidyardPlayer'
+import Loader from '@/components/layout/Loader'
 import leftPad from 'left-pad'
 
 export default {
   name: 'DetailedSharingPage',
-  components: { VidyardPlayer },
+  components: { VidyardPlayer, Loader },
   data () {
     return {
       playerObject: {},

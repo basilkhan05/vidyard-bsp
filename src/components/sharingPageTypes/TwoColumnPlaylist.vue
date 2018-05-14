@@ -5,6 +5,9 @@
         <h1 class="text-left">{{playerName}}</h1>
         <b-col lg="9">
           <div id="stage">
+            <div v-if="!playerIsReady">
+              <Loader />
+            </div>
             <div class="aspect-ratio">
               <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
             </div>
@@ -31,6 +34,9 @@
           </div>
         </b-col>
         <b-col lg="3">
+          <div v-if="!playerIsReady">
+            <Loader />
+          </div>
           <div id="vy-playlist" v-if="playerIsReady">
             <div v-for="(video, index) in chapterAttributes" :key="video.id">
               <b-card :img-src="video.video_attributes.thumbnail_urls.play_button_small"
@@ -56,11 +62,12 @@
 
 <script>
 import VidyardPlayer from '@/components/VidyardPlayer'
+import Loader from '@/components/layout/Loader'
 import leftPad from 'left-pad'
 
 export default {
   name: 'DetailedSharingPage',
-  components: { VidyardPlayer },
+  components: { VidyardPlayer, Loader },
   data () {
     return {
       playerObject: {},

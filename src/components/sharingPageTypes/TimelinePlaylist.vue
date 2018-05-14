@@ -4,6 +4,9 @@
       <b-row>
         <b-col lg="7">
           <h1 class="text-left">{{playerName}}</h1>
+          <div v-if="!playerIsReady">
+            <Loader />
+          </div>
           <div id="stage">
             <div class="aspect-ratio">
               <VidyardPlayer @playerData="getPlayerData" ref="VidyardPlayerContainer"></VidyardPlayer>
@@ -30,7 +33,8 @@
             <p>{{playerDescription}}</p>
           </div>
         </b-col>
-        <b-col lg="5">
+        <b-col lg="5" class="player-timeline">
+          <h3>Player Timeline</h3>
           <div class="timeline-wrap" v-if="playerIsReady">
             <ul class="timeline">
               <div id="vy-playlist">
@@ -65,6 +69,9 @@
               </div>
           </ul>
         </div>
+        <div v-else>
+          <Loader />
+        </div>
         </b-col>
       </b-row>
     </b-container>
@@ -73,11 +80,12 @@
 
 <script>
 import VidyardPlayer from '@/components/VidyardPlayer'
+import Loader from '@/components/layout/Loader'
 import leftPad from 'left-pad'
 
 export default {
   name: 'DetailedSharingPage',
-  components: { VidyardPlayer },
+  components: { VidyardPlayer, Loader },
   data () {
     return {
       playerObject: {},
@@ -237,6 +245,10 @@ export default {
   right: 0;
   color: white;
   background: grey;
+}
+.player-timeline {
+  padding: 20px 0;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .timeline-wrap {
   height: 750px;
